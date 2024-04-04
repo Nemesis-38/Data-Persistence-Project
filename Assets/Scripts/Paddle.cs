@@ -1,3 +1,8 @@
+/// Summary
+///   Make the paddle move on input
+///   Make sure the paddle doesn't go off limit
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

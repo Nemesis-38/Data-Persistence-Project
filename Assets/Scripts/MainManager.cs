@@ -1,15 +1,14 @@
 /// Summary
-// At the Start :
-//  Position the bricks
-// During the game :
-//  choose the direction of the ball on launch
-//  Reload the scene on input when game over
-// Variable : 
-//  m_Points
-/// 
-
-
-
+/// At the Start :
+///   Position the bricks
+///   Display the name of the Player next to the score
+/// During the game :
+///   Randomly choose the direction of the ball on launch of the game (hit space bar)
+///   Reload the scene on input when game over
+/// Variable : 
+///   m_Points
+///
+/// TODO : Make a change player button
 
 using System.Collections;
 using System.Collections.Generic;
@@ -25,10 +24,13 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
+    public Text BestScoreText; // My doing
+    public static string m_BestPlayerName; // I think it has to go in the MenuManager scene in order to be declared at the start of the session
     
     private bool m_Started = false;
     private int m_Points;
-    
+    public static int m_BestScore = 0;  // I think it has to go in the MenuManager scene in order to be declared at the start of the session
+
     private bool m_GameOver = false;
 
     
@@ -49,6 +51,8 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        BestScoreText.text = $"Best Score : {m_BestPlayerName} : {m_BestScore}";
     }
 
     private void Update()
@@ -75,15 +79,33 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    // Add point to m_Points
     void AddPoint(int point)
     {
         m_Points += point;
         ScoreText.text = $"Score : {m_Points}";
     }
 
+    // Display the game over text
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+
+        if (m_BestScore < m_Points)
+        {
+            m_BestScore = m_Points;
+            m_BestPlayerName = MenuManager.playerName;
+            BestScoreText.text = $"Best Score : {m_BestPlayerName} : {m_BestScore}";
+            
+            // Here you'll save the best score and bestPlayerName variable in a JSON file
+        }
+        
+    }
+
+    // Go Back to the menu scene
+    public void LoadMenuScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }
