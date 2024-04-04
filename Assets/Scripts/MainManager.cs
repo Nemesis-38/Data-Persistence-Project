@@ -1,3 +1,16 @@
+/// Summary
+// At the Start :
+//  Position the bricks
+// During the game :
+//  choose the direction of the ball on launch
+//  Reload the scene on input when game over
+// Variable : 
+//  m_Points
+/// 
+
+
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
