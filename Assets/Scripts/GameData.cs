@@ -5,17 +5,19 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-[Serializable]
-public class DataToSave
-{
-    public string m_BestPlayerName;
-    public int m_BestScore;
-}
+
 
 public class GameData : MonoBehaviour
 {
     // Persistent instance of the class
     public static GameData Instance;
+
+    [Serializable]
+    public class DataToSave
+    {
+        public string m_BestPlayerName;
+        public int m_BestScore;
+    }
 
     // Data to save
     public DataToSave dataToSave = new DataToSave();
