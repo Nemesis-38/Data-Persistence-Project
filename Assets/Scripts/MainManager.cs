@@ -8,10 +8,14 @@
 /// Variable : 
 ///   m_Points
 ///
-/// TODO : Make a change player button
+/// TODO : 
+///     Make the Name of the player that is playing visible (you'll see the bestplayer name and the name of the player that is playing
+///     Save the name and the score of the best player in a JSON file
 
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,11 +29,9 @@ public class MainManager : MonoBehaviour
     public Text ScoreText;
     public GameObject GameOverText;
     public Text BestScoreText; // My doing
-    public static string m_BestPlayerName; // I think it has to go in the MenuManager scene in order to be declared at the start of the session
     
     private bool m_Started = false;
     private int m_Points;
-    public static int m_BestScore = 0;  // I think it has to go in the MenuManager scene in order to be declared at the start of the session
 
     private bool m_GameOver = false;
 
@@ -52,7 +54,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        BestScoreText.text = $"Best Score : {m_BestPlayerName} : {m_BestScore}";
+        BestScoreText.text = $"Best Score : {GameData.Instance.dataToSave.m_BestPlayerName} : {GameData.Instance.dataToSave.m_BestScore}";
     }
 
     private void Update()
@@ -77,6 +79,7 @@ public class MainManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+
     }
 
     // Add point to m_Points
@@ -92,13 +95,13 @@ public class MainManager : MonoBehaviour
         m_GameOver = true;
         GameOverText.SetActive(true);
 
-        if (m_BestScore < m_Points)
+        if (GameData.Instance.dataToSave.m_BestScore < m_Points)
         {
-            m_BestScore = m_Points;
-            m_BestPlayerName = MenuManager.playerName;
-            BestScoreText.text = $"Best Score : {m_BestPlayerName} : {m_BestScore}";
-            
-            // Here you'll save the best score and bestPlayerName variable in a JSON file
+            GameData.Instance.dataToSave.m_BestScore = m_Points;
+            GameData.Instance.dataToSave.m_BestPlayerName = MenuManager.playerName;
+            BestScoreText.text = $"Best Score : {GameData.Instance.dataToSave.m_BestPlayerName} : {GameData.Instance.dataToSave.m_BestScore}";
+
+            GameData.Instance.SaveGameData();
         }
         
     }

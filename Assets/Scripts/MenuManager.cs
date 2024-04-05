@@ -1,11 +1,15 @@
 /// Summary
 ///     During menu phase : 
 ///         Display the best score
-/// DONE    Get the player name     
+///         Get the player name     
 ///     On Start button click
-/// DONE    Load the Main scene     
+///         Load the Main scene     
 ///     On Quit button click 
 ///         Exit the Game
+/// TO DO 
+///     Make a TMP To display a message when you forgot to input a name instead of the console message that is not visible by the players
+///     Load the name and the score of the best player in a JSON file
+
 
 using System.Collections;
 using System.Collections.Generic;
@@ -25,18 +29,15 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // if the variable are not null (this will prevent from fetching the file if we juste got back to the menu with my new "change player" button
-        if (MainManager.m_BestPlayerName != null) // && file exists
+        if (GameData.Instance.dataToSave.m_BestPlayerName != string.Empty)
         {
             Debug.Log("The Best player Name is not null");
-            bestScoreText.text = $"Best Score : {MainManager.m_BestPlayerName} : {MainManager.m_BestScore}";
+            bestScoreText.text = $"Best Score : {GameData.Instance.dataToSave.m_BestPlayerName} : {GameData.Instance.dataToSave.m_BestScore}";
         }
         else // If the variables are null
         {
-            // First you'll load the MainManager.bestScore and .bestPlayerName variable from a JSON file
+            Debug.Log("It's the first time you play, there's no file to load");
 
-            // Then you'll display : 
-            // bestScoreText.text = $"Best Score : {MainManager.m_BestPlayerName} : {MainManager.m_BestScore}";
         }
     }
 
@@ -58,7 +59,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            // Make a TMP To display instead of the consol that is not visible by the players
+            // Make a TMP To display instead of the console that is not visible by the players
             Debug.Log("You must enter a name to proceed");
         }
         
