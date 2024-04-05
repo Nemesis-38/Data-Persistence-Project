@@ -1,5 +1,21 @@
+/// Summary
+/// At the Start :
+///   Position the bricks
+///   Display the name of the Player next to the score
+/// During the game :
+///   Randomly choose the direction of the ball on launch of the game (hit space bar)
+///   Reload the scene on input when game over
+/// Variable : 
+///   m_Points
+///
+/// TODO : 
+///     Make the Name of the player that is playing visible (you'll see the bestplayer name and the name of the player that is playing
+///     Save the name and the score of the best player in a JSON file
+
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,10 +28,11 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
+    public Text BestScoreText; // My doing
     
     private bool m_Started = false;
     private int m_Points;
-    
+
     private bool m_GameOver = false;
 
     
@@ -36,6 +53,8 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        BestScoreText.text = $"Best Score : {GameData.Instance.dataToSave.m_BestPlayerName} : {GameData.Instance.dataToSave.m_BestScore}";
     }
 
     private void Update()
@@ -60,17 +79,36 @@ public class MainManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+
     }
 
+    // Add point to m_Points
     void AddPoint(int point)
     {
         m_Points += point;
         ScoreText.text = $"Score : {m_Points}";
     }
 
+    // Display the game over text
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+
+        if (GameData.Instance.dataToSave.m_BestScore < m_Points)
+        {
+            GameData.Instance.dataToSave.m_BestScore = m_Points;
+            GameData.Instance.dataToSave.m_BestPlayerName = MenuManager.playerName;
+            BestScoreText.text = $"Best Score : {GameData.Instance.dataToSave.m_BestPlayerName} : {GameData.Instance.dataToSave.m_BestScore}";
+
+            GameData.Instance.SaveGameData();
+        }
+        
+    }
+
+    // Go Back to the menu scene
+    public void LoadMenuScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }

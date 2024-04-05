@@ -1,3 +1,11 @@
+//Summary
+// During the game :
+//   On collision :
+//     Accelerate the ball a bit after each collision
+//     Ensure that the ball is always going a bit in the vertical direction
+//     Ensure the ball doesn't go more than a certain velocity
+
+
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -1,3 +1,12 @@
+// Summary
+//  At the start : 
+//   Give a color to the bick depending on the PointValue
+// During the game :
+//   on Collision : 
+//     trigger the onDestroyed Event, "invoke PointValue" ? 
+//     Destroy the brick after 0.2 sec (slight delay to be sure the ball have time to bounce)
+
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
