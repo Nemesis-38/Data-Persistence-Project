@@ -769,6 +769,7 @@ MonoBehaviour:
   highScore3rdText: {fileID: 1985910020}
   yourScoreTitleText: {fileID: 673665464}
   yourScoreText: {fileID: 136715549}
+  menuButton: {fileID: 698199589}
 --- !u!4 &580897979
 Transform:
   m_ObjectHideFlags: 0
@@ -1195,7 +1196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 715624018}
   m_Layer: 0
-  m_Name: -------------------- To remove before build
+  m_Name: --------- To remove before build -----------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

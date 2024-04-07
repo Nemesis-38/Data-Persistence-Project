@@ -13,6 +13,7 @@ public class HighScoreSceneManager : MonoBehaviour
     public TextMeshProUGUI highScore3rdText;
     public TextMeshProUGUI yourScoreTitleText;
     public TextMeshProUGUI yourScoreText;
+    public GameObject menuButton;
 
     //Sequence mySequence = DOTween.Sequence();
 
@@ -45,6 +46,8 @@ public class HighScoreSceneManager : MonoBehaviour
         highScore3rdText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.3f).From();
         yourScoreTitleText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.4f).From();
         yourScoreText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.5f).From();
+        menuButton.transform.DOLocalMoveX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.6f).From();
+
 
     }
 

@@ -44,13 +44,14 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerName = playerEntry.text;
+        // playerName = playerEntry.text;
         // Debug.Log($"Player Name: {playerName}");
     }
 
+
     public void LoadMainScene()
     {
-        //Debug.Log($"Attempting to load main scene with player name: '{playerName}' and input field text: '{playerEntry.text}'");
+        playerName = playerEntry.text;
 
         // if no playerName : You must enter a name !! 
         if (!string.IsNullOrEmpty(playerName)) // && playerName != "")
@@ -63,6 +64,24 @@ public class MenuManager : MonoBehaviour
             Debug.Log("You must enter a name to proceed");
         }
         
+    }
+
+    public void LoadHighScoreScene()
+    {
+        playerName = playerEntry.text;
+
+        // if no playerName : You must enter a name !! 
+        if (!string.IsNullOrEmpty(playerName)) // && playerName != "")
+        {
+            SceneManager.LoadScene(2); // Load the main scene
+        }
+        else
+        {
+            // Make a TMP To display instead of the console that is not visible by the players
+            playerName = "No name entered";
+            SceneManager.LoadScene(2);
+        }
+
     }
 
     public void ExitGame()

@@ -55,6 +55,7 @@ public class MainManager : MonoBehaviour
         }
 
         BestScoreText.text = $"Best Score : {GameData.Instance.dataToSave.m_BestPlayerName} : {GameData.Instance.dataToSave.m_BestScore}";
+        ScoreText.text = $"{MenuManager.playerName} Score : {m_Points}";
     }
 
     private void Update()
@@ -86,7 +87,7 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        ScoreText.text = $"{MenuManager.playerName} Score : {m_Points}";
     }
 
     // Display the game over text
