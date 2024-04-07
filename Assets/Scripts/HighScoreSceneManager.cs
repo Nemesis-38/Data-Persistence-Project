@@ -21,7 +21,7 @@ public class HighScoreSceneManager : MonoBehaviour
     {
         // Set up the texts
         highScoreTitleText.text = "High Score";
-        highScore1stText.text = $"1st\t{GameData.Instance.dataToSave.m_BestPlayerName}\t{GameData.Instance.dataToSave.m_BestScore}";
+        // highScore1stText.text = $"1st\t{GameData.Instance.dataToSave.m_BestPlayerName}\t{GameData.Instance.dataToSave.m_BestScore}";
         highScore2ndText.text = "2nd\t(Playername)\tscore";
         highScore3rdText.text = "3rd\t(Playername)\tscore";
         yourScoreTitleText.text = "Your score";
