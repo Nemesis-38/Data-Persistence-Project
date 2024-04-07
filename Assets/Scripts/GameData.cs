@@ -22,6 +22,8 @@ public class GameData : MonoBehaviour
     // Data to save
     public DataToSave dataToSave = new DataToSave();
 
+    // Variable
+
     // Awake is called before the Start method (and even if the script isn't loaded)
     // Awake is made for initialization. Start can then initialize things that need class or things that were previously initialize in the awake method
     void Awake()
@@ -40,19 +42,29 @@ public class GameData : MonoBehaviour
 
     public void SaveGameData()
     {
-        string saveFilePath = "D:/Unity Save data files/Data Persistence Project/saveFile.json";
+#if UNITY_EDITOR_WIN
+    string filePath = "D:/Unity Save data files/Data Persistence Project/saveFile.json";
+#else
+        string filePath = Application.persistentDataPath + "/saveFile.json";
+#endif
+
         string json = JsonUtility.ToJson(dataToSave);
-        File.WriteAllText(saveFilePath, json);
+        File.WriteAllText(filePath, json);
     }
 
     public void InitializeSingleton()
     {
         Instance = this;
-        string loadFilePath = "D:/Unity Save data files/Data Persistence Project/saveFile.json";
 
-        if (File.Exists(loadFilePath))
+#if UNITY_EDITOR_WIN
+        string filePath = "D:/Unity Save data files/Data Persistence Project/saveFile.json";
+#else
+        string filePath = Application.persistentDataPath + "/saveFile.json";
+#endif
+
+        if (File.Exists(filePath))
         {
-            string json = File.ReadAllText(loadFilePath);
+            string json = File.ReadAllText(filePath);
             dataToSave = JsonUtility.FromJson<DataToSave>(json);
             
         }

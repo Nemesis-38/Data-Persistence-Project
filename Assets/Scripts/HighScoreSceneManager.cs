@@ -21,7 +21,7 @@ public class HighScoreSceneManager : MonoBehaviour
     {
         // Set up the texts
         highScoreTitleText.text = "High Score";
-        highScore1stText.text = "1st\t(Playername)\tscore";
+        highScore1stText.text = $"1st\t{GameData.Instance.dataToSave.m_BestPlayerName}\t{GameData.Instance.dataToSave.m_BestScore}";
         highScore2ndText.text = "2nd\t(Playername)\tscore";
         highScore3rdText.text = "3rd\t(Playername)\tscore";
         yourScoreTitleText.text = "Your score";
@@ -29,12 +29,12 @@ public class HighScoreSceneManager : MonoBehaviour
 
 
         // Animate the texts
-        highScoreTitleText.rectTransform.DOAnchorPosX(1200f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1).From();
-        highScore1stText.rectTransform.DOAnchorPosX(1200f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.1f).From();
-        highScore2ndText.rectTransform.DOAnchorPosX(1200f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.2f).From();
-        highScore3rdText.rectTransform.DOAnchorPosX(1200f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.3f).From();
-        yourScoreTitleText.rectTransform.DOAnchorPosX(1200f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.4f).From();
-        yourScoreText.rectTransform.DOAnchorPosX(1200f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.5f).From();
+        highScoreTitleText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1).From();
+        highScore1stText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.1f).From();
+        highScore2ndText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.2f).From();
+        highScore3rdText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.3f).From();
+        yourScoreTitleText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.4f).From();
+        yourScoreText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.5f).From();
 
     }
 
