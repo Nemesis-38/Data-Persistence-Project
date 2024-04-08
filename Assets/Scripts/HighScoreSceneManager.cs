@@ -16,7 +16,7 @@ public class HighScoreSceneManager : MonoBehaviour
     public GameObject menuButton;
 
     //Sequence mySequence = DOTween.Sequence();
-
+    Sequence mySequence = DOTween.Sequence();
 
     // Start is called before the first frame update
     void Start()
@@ -36,17 +36,17 @@ public class HighScoreSceneManager : MonoBehaviour
         {
             Debug.Log("GameData.Instance is null, So you couldn't use its variable");
         }
-        
-
 
         // Animate the texts
-        highScoreTitleText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1).From();
-        highScore1stText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.1f).From();
-        highScore2ndText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.2f).From();
-        highScore3rdText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.3f).From();
-        yourScoreTitleText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.4f).From();
-        yourScoreText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.5f).From();
-        menuButton.transform.DOLocalMoveX(1300f, 0.3f).SetEase(Ease.InOutQuad).SetDelay(1.6f).From();
+        mySequence
+            .Append(highScoreTitleText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).From())
+            .Insert(0.1f, highScore1stText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).From())
+            .Insert(0.2f, highScore2ndText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).From())
+            .Insert(0.3f, highScore3rdText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).From())
+            .Insert(0.4f, yourScoreTitleText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).From())
+            .Insert(0.5f, yourScoreText.rectTransform.DOAnchorPosX(1300f, 0.3f).SetEase(Ease.InOutQuad).From())
+            .Insert(0.6f, menuButton.transform.DOLocalMoveX(1300f, 0.3f).SetEase(Ease.InOutQuad).From())
+            .PrependInterval(0.2f);
 
 
     }
@@ -54,7 +54,15 @@ public class HighScoreSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.anyKey)
+        {
+            if (mySequence.IsActive())
+            {
+                mySequence.Kill();
+            }
+
+            SceneManager.LoadScene(0);
+        }
     }
 
     public void LoadMenuScene()

@@ -19,6 +19,7 @@ using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class MainManager : MonoBehaviour
 {
@@ -75,10 +76,7 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
+            StartCoroutine(DisplayGameOver());
         }
 
     }
@@ -104,7 +102,7 @@ public class MainManager : MonoBehaviour
 
             GameData.Instance.SaveGameData();
         }
-        
+
     }
 
     // Go Back to the menu scene
@@ -112,4 +110,28 @@ public class MainManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    IEnumerator DisplayGameOver()
+    {
+        m_GameOver = false;
+
+        Tween gameOverTween = GameOverText.transform.DOScale(1.5f, 3).SetEase(Ease.OutCubic);
+
+        float countdown = 3;
+
+        while (countdown > 0 && !Input.anyKeyDown)
+        {
+            countdown -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        if (gameOverTween.IsActive())
+        {
+            gameOverTween.Kill();
+        }
+        
+        SceneManager.LoadScene(2);
+    }
+
 }

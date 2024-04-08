@@ -17,6 +17,7 @@ public class GameData : MonoBehaviour
     {
         public string m_BestPlayerName;
         public int m_BestScore;
+        // public List<int> bestScoreslist = new List<int>();
     }
 
     // Data to save
