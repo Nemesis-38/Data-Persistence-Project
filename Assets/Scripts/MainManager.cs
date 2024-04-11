@@ -57,7 +57,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        BestScoreText.text = $"Best Score : {GameData.Instance.dataToSave.m_BestPlayerName} : {GameData.Instance.dataToSave.m_BestScore}";
+        BestScoreText.text = $"Best Score : {GameData.Instance.bestPlayerList.dataToSave[0].playerName} : {GameData.Instance.bestPlayerList.dataToSave[0].playerScore}";
         ScoreText.text = $"{MenuManager.playerName} Score : {m_Points}";
     }
 
@@ -96,11 +96,20 @@ public class MainManager : MonoBehaviour
         m_GameOver = true;
         GameOverText.SetActive(true);
 
-        if (GameData.Instance.dataToSave.m_BestScore < m_Points)
+        // Make a conditional if the player got the 1st place
+        // Make an other conditional if the player is in the top 3
+        // Else nothing happen : you don't have to call the SaveGameData() method
+        if (GameData.Instance.bestPlayerList.dataToSave[0].playerScore < m_Points)
         {
-            GameData.Instance.dataToSave.m_BestScore = m_Points;
-            GameData.Instance.dataToSave.m_BestPlayerName = MenuManager.playerName;
-            BestScoreText.text = $"Best Score : {GameData.Instance.dataToSave.m_BestPlayerName} : {GameData.Instance.dataToSave.m_BestScore}";
+            Debug.Log("New High Score !!");
+
+            // Add to the list (new DataToSave item (player name & player score) in bestPlayerList)
+            // Sort the list
+            // Remove last item from list
+
+            //GameData.Instance.dataToSave.m_BestScore = m_Points;
+            //GameData.Instance.dataToSave.m_BestPlayerName = MenuManager.playerName;
+            //BestScoreText.text = $"Best Score : {GameData.Instance.dataToSave.m_BestPlayerName} : {GameData.Instance.dataToSave.m_BestScore}";
 
             GameData.Instance.SaveGameData();
         }

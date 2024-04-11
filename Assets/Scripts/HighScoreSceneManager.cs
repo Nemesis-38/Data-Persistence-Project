@@ -26,9 +26,9 @@ public class HighScoreSceneManager : MonoBehaviour
             Debug.Log("It worked !");
             // Set up the texts
             highScoreTitleText.text = "High Score";
-            highScore1stText.text = $"1st\t{GameData.Instance.dataToSave.m_BestPlayerName}\t{GameData.Instance.dataToSave.m_BestScore}";
-            highScore2ndText.text = "2nd\t(Playername)\tscore";
-            highScore3rdText.text = "3rd\t(Playername)\tscore";
+            highScore1stText.text = $"1st\t{GameData.Instance.bestPlayerList.dataToSave[0].playerName}\t{GameData.Instance.bestPlayerList.dataToSave[0].playerScore}";
+            highScore2ndText.text = $"2nd\t{GameData.Instance.bestPlayerList.dataToSave[1].playerName}\t{GameData.Instance.bestPlayerList.dataToSave[1].playerScore}";
+            highScore3rdText.text = $"3rd\t{GameData.Instance.bestPlayerList.dataToSave[2].playerName}\t{GameData.Instance.bestPlayerList.dataToSave[2].playerScore}";
             yourScoreTitleText.text = "Your score";
             yourScoreText.text = $"\t{MenuManager.playerName}\t{MainManager.m_Points}";
         }

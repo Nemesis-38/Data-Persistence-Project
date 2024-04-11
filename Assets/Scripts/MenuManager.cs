@@ -39,12 +39,14 @@ public class MenuManager : MonoBehaviour
             playerEntry.text = playerName;
         }
 
-        if (GameData.Instance.dataToSave.m_BestPlayerName != string.Empty)
+        // I think I will be able to remove this conditional since even if I never played, I initialized the list with player 1 2 3 and score zero to each of them...
+        // So there will always be something to display
+        if (GameData.Instance.bestPlayerList.dataToSave[0].playerName != string.Empty) // If there is best player
         {
             Debug.Log("The Best player Name is not null");
-            bestScoreText.text = $"Best Score : {GameData.Instance.dataToSave.m_BestPlayerName} : {GameData.Instance.dataToSave.m_BestScore}";
+            bestScoreText.text = $"Best Score : {GameData.Instance.bestPlayerList.dataToSave[0].playerName} : {GameData.Instance.bestPlayerList.dataToSave[0].playerScore}"; // display its name and score
         }
-        else // If the variables are null
+        else // If there is no best player
         {
             Debug.Log("It's the first time you play, there's no file to load");
 
