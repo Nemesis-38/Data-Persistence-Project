@@ -30,7 +30,7 @@ public class HighScoreSceneManager : MonoBehaviour
             highScore2ndText.text = "2nd\t(Playername)\tscore";
             highScore3rdText.text = "3rd\t(Playername)\tscore";
             yourScoreTitleText.text = "Your score";
-            yourScoreText.text = $"\t{MenuManager.playerName}\tscore";
+            yourScoreText.text = $"\t{MenuManager.playerName}\t{MainManager.m_Points}";
         }
         else
         {

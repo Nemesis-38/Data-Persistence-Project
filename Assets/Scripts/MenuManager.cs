@@ -11,6 +11,7 @@
 ///     Load the name and the score of the best player in a JSON file
 
 
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -18,6 +19,7 @@ using TMPro;
 using UnityEditor;
 #endif
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
@@ -25,10 +27,18 @@ public class MenuManager : MonoBehaviour
     public static string playerName;
     public TMP_InputField playerEntry;
     public TextMeshProUGUI bestScoreText;
+    public bool inputFieldIsAnimated;
+    public Tween inputFieldTween;
 
     // Start is called before the first frame update
     void Start()
     {
+        // If you already have entered a playername, put it in the input field
+        if (!string.IsNullOrEmpty(playerName))
+        {
+            playerEntry.text = playerName;
+        }
+
         if (GameData.Instance.dataToSave.m_BestPlayerName != string.Empty)
         {
             Debug.Log("The Best player Name is not null");
@@ -44,8 +54,25 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // playerName = playerEntry.text;
-        // Debug.Log($"Player Name: {playerName}");
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            LoadMainScene();
+        }
+
+        if (EventSystem.current.currentSelectedGameObject != playerEntry.gameObject && !inputFieldIsAnimated && string.IsNullOrEmpty(playerEntry.text))
+        {
+            Debug.Log("Animate the input field");
+            inputFieldTween = playerEntry.transform.DOScale(2.5f, 0.5f).SetEase(Ease.OutQuad).SetLoops(-1, LoopType.Yoyo);
+            
+            inputFieldIsAnimated = true;
+        }
+        else if (EventSystem.current.currentSelectedGameObject == playerEntry.gameObject && inputFieldIsAnimated)
+        {
+            Debug.Log("put the object to default state and stop to animate");
+            inputFieldTween.Rewind();
+
+            inputFieldIsAnimated = false;
+        }
     }
 
 
@@ -70,6 +97,8 @@ public class MenuManager : MonoBehaviour
     {
         playerName = playerEntry.text;
 
+        inputFieldTween.Kill();
+
         // if no playerName : You must enter a name !! 
         if (!string.IsNullOrEmpty(playerName)) // && playerName != "")
         {
@@ -78,7 +107,7 @@ public class MenuManager : MonoBehaviour
         else
         {
             // Make a TMP To display instead of the console that is not visible by the players
-            playerName = "No name entered";
+            // playerName = "No name entered";
             SceneManager.LoadScene(2);
         }
 

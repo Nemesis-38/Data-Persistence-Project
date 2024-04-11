@@ -32,7 +32,7 @@ public class MainManager : MonoBehaviour
     public Text BestScoreText; // My doing
     
     private bool m_Started = false;
-    private int m_Points;
+    public static int m_Points;
 
     private bool m_GameOver = false;
 
@@ -40,6 +40,8 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_Points = 0;
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
