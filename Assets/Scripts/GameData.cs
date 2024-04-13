@@ -83,4 +83,9 @@ public class GameData : MonoBehaviour
         
     }
 
+    public static int ComparePlayerScoreDescendingOrder(DataToSave p1, DataToSave p2)
+    {
+        return p2.playerScore.CompareTo(p1.playerScore);
+    }
+
 }
