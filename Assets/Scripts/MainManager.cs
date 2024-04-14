@@ -21,6 +21,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Linq;
+using TMPro;
 
 public class MainManager : MonoBehaviour
 {
@@ -31,7 +32,11 @@ public class MainManager : MonoBehaviour
     public Text ScoreText;
     public GameObject GameOverText;
     public Text BestScoreText; // My doing
-    
+    public GameObject top3Text;
+    public GameObject newHighScoreText;
+    Tween newHighScoreTween;
+    Tween top3Tween;
+
     private bool m_Started = false;
     public static int m_Points;
 
@@ -97,12 +102,18 @@ public class MainManager : MonoBehaviour
         m_GameOver = true;
         GameOverText.SetActive(true);
 
+        
+
         // Make a conditional if the player got the 1st place
         // Make an other conditional if the player is in the top 3
         // Else nothing happen : you don't have to call the SaveGameData() method
         if (GameData.Instance.bestPlayerList.dataToSave[0].playerScore < m_Points) // if the player got the 1st place
         {
             Debug.Log("New High Score !!");
+
+            newHighScoreText.SetActive(true);
+
+            newHighScoreTween = newHighScoreText.transform.DOShakeScale(3, 0.2f, 5);
 
             UpdateTheScoreList();
             
@@ -116,6 +127,10 @@ public class MainManager : MonoBehaviour
         else if (GameData.Instance.bestPlayerList.dataToSave[2].playerScore < m_Points)
         {
             Debug.Log("You made it in the top 3 !!");
+
+            top3Text.SetActive(true);
+
+            top3Tween = top3Text.transform.DOShakeScale(3, 0.2f, 5);
 
             UpdateTheScoreList();
 
@@ -148,6 +163,16 @@ public class MainManager : MonoBehaviour
         if (gameOverTween.IsActive())
         {
             gameOverTween.Kill();
+        }
+
+        if (newHighScoreTween.IsActive())
+        {
+            newHighScoreTween.Kill();
+        }
+
+        if (top3Tween.IsActive())
+        {
+            top3Tween.Kill();
         }
         
         SceneManager.LoadScene(2);

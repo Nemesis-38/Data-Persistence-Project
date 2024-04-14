@@ -24,11 +24,14 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    public GameObject blueArrow;
     public static string playerName;
     public TMP_InputField playerEntry;
     public TextMeshProUGUI bestScoreText;
     public bool inputFieldIsAnimated;
     public Tween inputFieldTween;
+    private Tween blueArrowTween;
+    private Coroutine displayBlueArrowCoroutine = null;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +59,7 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             LoadMainScene();
         }
@@ -82,17 +85,48 @@ public class MenuManager : MonoBehaviour
     {
         playerName = playerEntry.text;
 
-        // if no playerName : You must enter a name !! 
-        if (!string.IsNullOrEmpty(playerName)) // && playerName != "")
+        if (!string.IsNullOrEmpty(playerName)) // If player name is not null or empty
         {
+            if (displayBlueArrowCoroutine != null)
+            {
+                StopCoroutine(displayBlueArrowCoroutine);
+                displayBlueArrowCoroutine = null;
+
+                if (blueArrowTween.IsActive())
+                {
+                    blueArrowTween.Kill();
+                }
+            }
+
             SceneManager.LoadScene(1); // Load the main scene
         }
-        else
+        else // If player name is null or empty
         {
-            // Make a TMP To display instead of the console that is not visible by the players
             Debug.Log("You must enter a name to proceed");
+            if (displayBlueArrowCoroutine == null)
+            {
+                displayBlueArrowCoroutine = StartCoroutine(DisplayBlueArrow(3));
+            }
         }
         
+    }
+
+    IEnumerator DisplayBlueArrow(float time)
+    {
+        blueArrow.SetActive(true);
+        blueArrowTween = blueArrow.transform.DOScaleX(1.5f, 0.5f).SetEase(Ease.InOutCubic).SetLoops(-1,LoopType.Yoyo);
+
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            yield return null;
+        }
+
+        blueArrowTween.Kill();
+        blueArrow.SetActive(false);
+
+        displayBlueArrowCoroutine = null;
+
     }
 
     public void LoadHighScoreScene()

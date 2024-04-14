@@ -54,7 +54,7 @@ public class HighScoreSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey)
+        if (Input.GetKey(KeyCode.Space))
         {
             if (mySequence.IsActive())
             {
