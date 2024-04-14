@@ -133,19 +133,38 @@ public class MenuManager : MonoBehaviour
     {
         playerName = playerEntry.text;
 
+        // inputFieldTween.Kill(); was there !
+
+        if (displayBlueArrowCoroutine != null)
+        {
+            StopCoroutine(displayBlueArrowCoroutine);
+            displayBlueArrowCoroutine = null;
+
+            if (blueArrowTween.IsActive())
+            {
+                blueArrowTween.Kill();
+            }
+        }
+
         inputFieldTween.Kill();
 
-        // if no playerName : You must enter a name !! 
-        if (!string.IsNullOrEmpty(playerName)) // && playerName != "")
-        {
-            SceneManager.LoadScene(2); // Load the main scene
-        }
-        else
-        {
-            // Make a TMP To display instead of the console that is not visible by the players
-            // playerName = "No name entered";
-            SceneManager.LoadScene(2);
-        }
+        SceneManager.LoadScene(2); // Load the main scene
+
+
+        //// if no playerName : You must enter a name !! 
+        //if (!string.IsNullOrEmpty(playerName)) // && playerName != "")
+        //{
+        //    SceneManager.LoadScene(2); // Load the main scene
+        //}
+        //else
+        //{
+        //    // Make a TMP To display instead of the console that is not visible by the players
+        //    // playerName = "No name entered";
+            
+        //    inputFieldTween.Kill();
+
+        //    SceneManager.LoadScene(2);
+        //}
 
     }
 

@@ -23,14 +23,30 @@ public class HighScoreSceneManager : MonoBehaviour
     {
         if (GameData.Instance != null)
         {
-            Debug.Log("It worked !");
-            // Set up the texts
+            // Get the maxLengthOfName
+            int biggestNameLength = 0;
+            foreach (GameData.DataToSave player in GameData.Instance.bestPlayerList.dataToSave)
+            {
+                if (biggestNameLength < player.playerName.Length)
+                {
+                    biggestNameLength = player.playerName.Length;
+                }
+            }
+
+            if (biggestNameLength < MenuManager.playerName.Length)
+            {
+                biggestNameLength = MenuManager.playerName.Length;
+            }
+
+            Debug.Log("biggest name length : " + biggestNameLength);
+
+            // Display the different text in the Highscore 
             highScoreTitleText.text = "High Score";
-            highScore1stText.text = $"1st\t{GameData.Instance.bestPlayerList.dataToSave[0].playerName}\t{GameData.Instance.bestPlayerList.dataToSave[0].playerScore}";
-            highScore2ndText.text = $"2nd\t{GameData.Instance.bestPlayerList.dataToSave[1].playerName}\t{GameData.Instance.bestPlayerList.dataToSave[1].playerScore}";
-            highScore3rdText.text = $"3rd\t{GameData.Instance.bestPlayerList.dataToSave[2].playerName}\t{GameData.Instance.bestPlayerList.dataToSave[2].playerScore}";
+            highScore1stText.text = FormatHighScoreText("1st", GameData.Instance.bestPlayerList.dataToSave[0].playerName, GameData.Instance.bestPlayerList.dataToSave[0].playerScore, biggestNameLength); // $"1st\t{GameData.Instance.bestPlayerList.dataToSave[0].playerName}\t{GameData.Instance.bestPlayerList.dataToSave[0].playerScore}";
+            highScore2ndText.text = FormatHighScoreText("2nd", GameData.Instance.bestPlayerList.dataToSave[1].playerName, GameData.Instance.bestPlayerList.dataToSave[1].playerScore, biggestNameLength); // $"2nd\t{GameData.Instance.bestPlayerList.dataToSave[1].playerName}\t{GameData.Instance.bestPlayerList.dataToSave[1].playerScore}";
+            highScore3rdText.text = FormatHighScoreText("3rd", GameData.Instance.bestPlayerList.dataToSave[2].playerName, GameData.Instance.bestPlayerList.dataToSave[2].playerScore, biggestNameLength); // $"3rd\t{GameData.Instance.bestPlayerList.dataToSave[2].playerName}\t{GameData.Instance.bestPlayerList.dataToSave[2].playerScore}";
             yourScoreTitleText.text = "Your score";
-            yourScoreText.text = $"\t{MenuManager.playerName}\t{MainManager.m_Points}";
+            yourScoreText.text = FormatHighScoreText("---", MenuManager.playerName, MainManager.m_Points, biggestNameLength); // $"\t{MenuManager.playerName}\t{MainManager.m_Points}";
         }
         else
         {
@@ -68,5 +84,10 @@ public class HighScoreSceneManager : MonoBehaviour
     public void LoadMenuScene()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public string FormatHighScoreText(string label, string playerName, int playerScore, int lengthOfName)
+    {
+        return $"{label}\t{playerName.PadRight(lengthOfName, ' ')}{" "}\t{playerScore}";
     }
 }
