@@ -40,7 +40,7 @@ public class MainManager : MonoBehaviour
     private bool m_Started = false;
     public static int m_Points;
 
-    private bool m_GameOver = false;
+    //private bool m_GameOver = false;
 
     
     // Start is called before the first frame update
@@ -82,10 +82,10 @@ public class MainManager : MonoBehaviour
                 Ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
             }
         }
-        else if (m_GameOver)
-        {
-            StartCoroutine(DisplayGameOver());
-        }
+        //else if (m_GameOver)
+        //{
+        //    StartCoroutine(DisplayGameOver());
+        //}
 
     }
 
@@ -99,37 +99,25 @@ public class MainManager : MonoBehaviour
     // Display the game over text
     public void GameOver()
     {
-        m_GameOver = true;
-        GameOverText.SetActive(true);
-
         if (GameData.Instance.bestPlayerList.dataToSave[0].playerScore < m_Points) // if the player got the 1st place
         {
-            Debug.Log("New High Score !!");
-
-            newHighScoreText.SetActive(true);
-
-            newHighScoreTween = newHighScoreText.transform.DOShakeScale(3, 0.2f, 5);
+            StartCoroutine(DisplayNewHighScore());
 
             UpdateTheScoreList();
             
-            // Old way with only one player and score to save
-            //GameData.Instance.dataToSave.m_BestScore = m_Points;
-            //GameData.Instance.dataToSave.m_BestPlayerName = MenuManager.playerName;
-            //BestScoreText.text = $"Best Score : {GameData.Instance.dataToSave.m_BestPlayerName} : {GameData.Instance.dataToSave.m_BestScore}";
-
             GameData.Instance.SaveGameData();
         }
         else if (GameData.Instance.bestPlayerList.dataToSave[2].playerScore < m_Points)
         {
-            Debug.Log("You made it in the top 3 !!");
-
-            top3Text.SetActive(true);
-
-            top3Tween = top3Text.transform.DOShakeScale(3, 0.2f, 5);
+            StartCoroutine(DisplayTop3());
 
             UpdateTheScoreList();
 
             GameData.Instance.SaveGameData();
+        }
+        else
+        {
+            StartCoroutine(DisplayGameOver());
         }
 
     }
@@ -142,7 +130,7 @@ public class MainManager : MonoBehaviour
 
     IEnumerator DisplayGameOver()
     {
-        m_GameOver = false;
+        GameOverText.SetActive(true);
 
         Tween gameOverTween = GameOverText.transform.DOScale(1.5f, 3).SetEase(Ease.OutCubic);
 
@@ -159,19 +147,60 @@ public class MainManager : MonoBehaviour
         {
             gameOverTween.Kill();
         }
+        
+        SceneManager.LoadScene(2);
+    }
 
-        if (newHighScoreTween.IsActive())
+    IEnumerator DisplayTop3()
+    {
+        Debug.Log("You made it in the top 3 !!");
+
+        top3Text.SetActive(true);
+
+        top3Tween = top3Text.transform.DOShakeScale(3, 0.2f, 5);
+
+        float countdown = 3;
+
+        while (countdown > 0 && !Input.anyKeyDown)
         {
-            newHighScoreTween.Kill();
+            countdown -= Time.deltaTime;
+
+            yield return null;
         }
 
         if (top3Tween.IsActive())
         {
             top3Tween.Kill();
         }
-        
+
         SceneManager.LoadScene(2);
     }
+
+    IEnumerator DisplayNewHighScore()
+    {
+        Debug.Log("New High Score !!");
+
+        newHighScoreText.SetActive(true);
+
+        newHighScoreTween = newHighScoreText.transform.DOShakeScale(3, 0.2f, 5);
+
+        float countdown = 3;
+
+        while (countdown > 0 && !Input.anyKeyDown)
+        {
+            countdown -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        if (newHighScoreTween.IsActive())
+        {
+            newHighScoreTween.Kill();
+        }
+
+        SceneManager.LoadScene(2);
+    }
+
 
 
     void UpdateTheScoreList()
