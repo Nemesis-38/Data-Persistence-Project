@@ -46,7 +46,7 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_Points = 0;
+        //m_Points = 0;
 
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
@@ -63,8 +63,8 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        BestScoreText.text = $"Best Score : {GameData.Instance.bestPlayerList.dataToSave[0].playerName} : {GameData.Instance.bestPlayerList.dataToSave[0].playerScore}";
-        ScoreText.text = $"{MenuManager.playerName} Score : {m_Points}";
+        BestScoreText.text = $"Best Score: {GameData.Instance.bestPlayerList.dataToSave[0].playerName}: {GameData.Instance.bestPlayerList.dataToSave[0].playerScore}";
+        ScoreText.text = $"{MenuManager.playerName} Score: {m_Points}";
     }
 
     private void Update()
@@ -93,7 +93,7 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"{MenuManager.playerName} Score : {m_Points}";
+        ScoreText.text = $"{MenuManager.playerName} Score: {m_Points}";
     }
 
     // Display the game over text
@@ -102,11 +102,6 @@ public class MainManager : MonoBehaviour
         m_GameOver = true;
         GameOverText.SetActive(true);
 
-        
-
-        // Make a conditional if the player got the 1st place
-        // Make an other conditional if the player is in the top 3
-        // Else nothing happen : you don't have to call the SaveGameData() method
         if (GameData.Instance.bestPlayerList.dataToSave[0].playerScore < m_Points) // if the player got the 1st place
         {
             Debug.Log("New High Score !!");

@@ -36,6 +36,9 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Initialize m_Points
+        MainManager.m_Points = 0;
+
         // If you already have entered a playername, put it in the input field
         if (!string.IsNullOrEmpty(playerName))
         {
@@ -47,7 +50,7 @@ public class MenuManager : MonoBehaviour
         if (GameData.Instance.bestPlayerList.dataToSave[0].playerName != string.Empty) // If there is best player
         {
             Debug.Log("The Best player Name is not null");
-            bestScoreText.text = $"Best Score : {GameData.Instance.bestPlayerList.dataToSave[0].playerName} : {GameData.Instance.bestPlayerList.dataToSave[0].playerScore}"; // display its name and score
+            bestScoreText.text = $"Best Score: {GameData.Instance.bestPlayerList.dataToSave[0].playerName}: {GameData.Instance.bestPlayerList.dataToSave[0].playerScore}"; // display its name and score
         }
         else // If there is no best player
         {
